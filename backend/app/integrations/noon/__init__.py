@@ -1,0 +1,1 @@
+"""Noon integration extension point."""
