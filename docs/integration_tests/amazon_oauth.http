@@ -1,0 +1,28 @@
+# Amazon OAuth integration examples
+#
+# Replace variables before running with an HTTP client that supports .http files.
+
+@base_url = http://localhost:8000
+@tenant_id = 00000000-0000-0000-0000-000000000000
+@marketplace_id = A2VIGQ35RCS4UG
+
+### Health
+GET {{base_url}}/health
+
+### API health
+GET {{base_url}}/api/health
+
+### Generate Seller Central authorization URL for Europe
+GET {{base_url}}/api/auth/amazon/test-login?tenant_id={{tenant_id}}&region=europe&marketplace_id={{marketplace_id}}
+
+### Generate Seller Central authorization URL for North America
+GET {{base_url}}/api/auth/amazon/test-login?tenant_id={{tenant_id}}&region=north_america&marketplace_id=ATVPDKIKX0DER
+
+### Generate Seller Central authorization URL for Far East
+GET {{base_url}}/api/auth/amazon/test-login?tenant_id={{tenant_id}}&region=far_east&marketplace_id=A1VC38T7YXB528
+
+### Amazon callback after Seller Central redirects back
+GET {{base_url}}/api/auth/amazon/callback?state=<state>&spapi_oauth_code=<code>&selling_partner_id=<seller_id>&marketplace_id={{marketplace_id}}
+
+### Check Amazon authorization status
+GET {{base_url}}/api/auth/amazon/status?tenant_id={{tenant_id}}

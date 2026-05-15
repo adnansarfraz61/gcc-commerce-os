@@ -13,17 +13,18 @@
 - CORS and structured application logging
 - Dockerfile and Docker Compose
 - Amazon Login With Amazon OAuth login and callback endpoints
+- Live Seller Central authorization testing endpoint
 - Amazon refresh-token exchange client
 - SP-API credential configuration surface
 - Dedicated Amazon seller authorization storage with encrypted refresh tokens
 
 ## Amazon OAuth Flow
 
-1. Client calls `GET /api/auth/amazon/login?tenant_id=<tenant_id>`.
+1. Client calls `GET /api/auth/amazon/test-login?tenant_id=<tenant_id>&region=europe`.
 2. Backend validates the tenant and signs a short-lived OAuth state token.
-3. Backend returns the Amazon authorization URL.
+3. Backend stores the state hash in Redis with a short TTL and returns the Seller Central authorization URL.
 4. Amazon redirects to `/api/auth/amazon/callback` with `state`, seller identifier, marketplace identifier, and either `spapi_oauth_code` or `code`.
-5. Backend exchanges the code for LWA tokens.
+5. Backend validates and consumes the stored state, then exchanges the code for LWA tokens.
 6. Backend encrypts and stores the refresh token in `amazon_seller_authorizations`.
 
 ## Next Phases

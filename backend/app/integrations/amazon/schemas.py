@@ -8,6 +8,11 @@ class AmazonLoginResponse(BaseModel):
     authorization_url: AnyHttpUrl
     state: str
     marketplace_id: str
+    region: str | None = None
+
+
+class AmazonTestLoginResponse(AmazonLoginResponse):
+    seller_central_region: str
 
 
 class AmazonCallbackResponse(BaseModel):
@@ -16,6 +21,20 @@ class AmazonCallbackResponse(BaseModel):
     seller_id: str
     marketplace_id: str
     created_at: datetime
+
+
+class AmazonAuthorizationStatusItem(BaseModel):
+    id: UUID
+    seller_id: str
+    marketplace_id: str
+    created_at: datetime
+    updated_at: datetime
+
+
+class AmazonAuthorizationStatusResponse(BaseModel):
+    tenant_id: UUID
+    connected: bool
+    authorizations: list[AmazonAuthorizationStatusItem]
 
 
 class AmazonTokenResponse(BaseModel):

@@ -29,4 +29,8 @@ The application expects environment variables from the root `.env.example`.
 
 `GET /api/auth/amazon/login` builds a Login With Amazon consent URL using `AMAZON_CLIENT_ID` and `AMAZON_REDIRECT_URI`.
 
+`GET /api/auth/amazon/test-login` builds a Seller Central authorization URL for North America, Europe, or Far East using `AMAZON_SP_API_APPLICATION_ID`.
+
 `GET /api/auth/amazon/callback` exchanges the authorization code with Amazon's token endpoint using `AMAZON_CLIENT_SECRET`, then stores the seller ID, marketplace ID, encrypted refresh token, and creation timestamp in `amazon_seller_authorizations`.
+
+`GET /api/auth/amazon/status` returns stored Amazon seller authorization metadata for a tenant without returning tokens.

@@ -39,6 +39,8 @@ def create_oauth_state(
     provider: str,
     return_path: str | None = None,
     marketplace_id: str | None = None,
+    region: str | None = None,
+    flow: str | None = None,
 ) -> str:
     settings = get_settings()
     return create_access_token(
@@ -49,6 +51,8 @@ def create_oauth_state(
             "provider": provider,
             "return_path": return_path,
             "marketplace_id": marketplace_id,
+            "region": region,
+            "flow": flow,
         },
     )
 
