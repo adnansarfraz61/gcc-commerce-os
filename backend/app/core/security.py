@@ -34,14 +34,22 @@ def create_access_token(
 
 
 def create_oauth_state(
-    *, tenant_id: UUID, provider: str, return_path: str | None = None
+    *,
+    tenant_id: UUID,
+    provider: str,
+    return_path: str | None = None,
+    marketplace_id: str | None = None,
 ) -> str:
     settings = get_settings()
     return create_access_token(
         subject="oauth-state",
         tenant_id=tenant_id,
         expires_delta=timedelta(minutes=settings.oauth_state_expire_minutes),
-        extra_claims={"provider": provider, "return_path": return_path},
+        extra_claims={
+            "provider": provider,
+            "return_path": return_path,
+            "marketplace_id": marketplace_id,
+        },
     )
 
 

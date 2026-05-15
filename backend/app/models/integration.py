@@ -55,3 +55,28 @@ class SellerAuthorization(UUIDPrimaryKeyMixin, TimestampMixin, Base):
     last_synced_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
 
     tenant = relationship("Tenant", back_populates="seller_authorizations")
+
+
+class AmazonSellerAuthorization(UUIDPrimaryKeyMixin, TimestampMixin, Base):
+    __tablename__ = "amazon_seller_authorizations"
+    __table_args__ = (
+        UniqueConstraint(
+            "tenant_id",
+            "seller_id",
+            "marketplace_id",
+            name="uq_amazon_seller_authorizations_tenant_seller_marketplace",
+        ),
+        Index("ix_amazon_seller_authorizations_seller_id", "seller_id"),
+        Index("ix_amazon_seller_authorizations_marketplace_id", "marketplace_id"),
+    )
+
+    tenant_id: Mapped[UUID] = mapped_column(
+        ForeignKey("tenants.id", ondelete="CASCADE"),
+        nullable=False,
+        index=True,
+    )
+    seller_id: Mapped[str] = mapped_column(String(255), nullable=False)
+    marketplace_id: Mapped[str] = mapped_column(String(64), nullable=False)
+    encrypted_refresh_token: Mapped[str] = mapped_column(Text, nullable=False)
+
+    tenant = relationship("Tenant", back_populates="amazon_seller_authorizations")

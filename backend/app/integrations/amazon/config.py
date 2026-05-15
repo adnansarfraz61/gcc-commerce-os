@@ -4,12 +4,13 @@ from app.core.config import Settings, get_settings
 
 
 class AmazonSPAPIConfig(BaseModel):
-    lwa_client_id: str
-    lwa_client_secret: str
-    lwa_redirect_uri: str
+    client_id: str
+    client_secret: str
+    redirect_uri: str
     lwa_auth_url: str
     lwa_token_url: str
     lwa_scopes: str
+    default_marketplace_id: str
     sp_api_region: str
     sp_api_endpoint: str
     sp_api_application_id: str
@@ -22,12 +23,13 @@ class AmazonSPAPIConfig(BaseModel):
     def from_settings(cls, settings: Settings | None = None) -> "AmazonSPAPIConfig":
         settings = settings or get_settings()
         return cls(
-            lwa_client_id=settings.amazon_lwa_client_id,
-            lwa_client_secret=settings.amazon_lwa_client_secret,
-            lwa_redirect_uri=settings.amazon_lwa_redirect_uri,
+            client_id=settings.amazon_client_id,
+            client_secret=settings.amazon_client_secret,
+            redirect_uri=settings.amazon_redirect_uri,
             lwa_auth_url=settings.amazon_lwa_auth_url,
             lwa_token_url=settings.amazon_lwa_token_url,
             lwa_scopes=settings.amazon_lwa_scopes,
+            default_marketplace_id=settings.amazon_default_marketplace_id,
             sp_api_region=settings.amazon_sp_api_region,
             sp_api_endpoint=settings.amazon_sp_api_endpoint,
             sp_api_application_id=settings.amazon_sp_api_application_id,

@@ -37,6 +37,14 @@ docs/             Architecture and phase documentation
 
 2. Fill in secrets and Amazon Login With Amazon credentials in `.env`.
 
+   Required Amazon OAuth variables:
+
+   ```bash
+   AMAZON_CLIENT_ID=amzn1.application-oa2-client...
+   AMAZON_CLIENT_SECRET=...
+   AMAZON_REDIRECT_URI=http://localhost:8000/api/auth/amazon/callback
+   ```
+
 3. Start the local stack.
 
    ```bash
@@ -61,6 +69,33 @@ docs/             Architecture and phase documentation
 - `GET /api/ready` database and Redis readiness probe
 - `GET /api/auth/amazon/login?tenant_id=<uuid>` start Amazon OAuth
 - `GET /api/auth/amazon/callback` complete Amazon OAuth and store seller authorization
+
+## Testing Amazon OAuth Locally
+
+1. Start the local stack and run migrations.
+
+   ```bash
+   docker compose up --build
+   docker compose exec api alembic upgrade head
+   ```
+
+2. Create or seed a tenant row, then open the generated consent URL.
+
+   ```bash
+   curl "http://localhost:8000/api/auth/amazon/login?tenant_id=<tenant_uuid>&marketplace_id=A2VIGQ35RCS4UG"
+   ```
+
+3. After Amazon redirects to `AMAZON_REDIRECT_URI`, the callback accepts `code` or `spapi_oauth_code`, plus `seller_id` or `selling_partner_id`.
+
+   ```bash
+   curl "http://localhost:8000/api/auth/amazon/callback?state=<state>&spapi_oauth_code=<code>&selling_partner_id=<seller_id>&marketplace_id=A2VIGQ35RCS4UG"
+   ```
+
+4. Verify storage in PostgreSQL.
+
+   ```bash
+   docker compose exec postgres psql -U gcc -d gcc_commerce_os -c "select seller_id, marketplace_id, created_at from amazon_seller_authorizations;"
+   ```
 
 ## Phase 1 Scope
 

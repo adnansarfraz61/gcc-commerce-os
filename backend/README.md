@@ -24,3 +24,9 @@ alembic upgrade head
 ```
 
 The application expects environment variables from the root `.env.example`.
+
+## Amazon OAuth
+
+`GET /api/auth/amazon/login` builds a Login With Amazon consent URL using `AMAZON_CLIENT_ID` and `AMAZON_REDIRECT_URI`.
+
+`GET /api/auth/amazon/callback` exchanges the authorization code with Amazon's token endpoint using `AMAZON_CLIENT_SECRET`, then stores the seller ID, marketplace ID, encrypted refresh token, and creation timestamp in `amazon_seller_authorizations`.

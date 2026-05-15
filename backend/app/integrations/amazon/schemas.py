@@ -7,14 +7,15 @@ from pydantic import AnyHttpUrl, BaseModel, Field
 class AmazonLoginResponse(BaseModel):
     authorization_url: AnyHttpUrl
     state: str
+    marketplace_id: str
 
 
 class AmazonCallbackResponse(BaseModel):
     tenant_id: UUID
-    seller_authorization_id: UUID
-    marketplace: str = "amazon"
-    external_seller_id: str
-    status: str
+    amazon_seller_authorization_id: UUID
+    seller_id: str
+    marketplace_id: str
+    created_at: datetime
 
 
 class AmazonTokenResponse(BaseModel):

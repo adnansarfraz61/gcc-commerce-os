@@ -47,12 +47,13 @@ class Settings(BaseSettings):
 
     backend_cors_origins: list[AnyHttpUrl | str] = Field(default_factory=list)
 
-    amazon_lwa_client_id: str = ""
-    amazon_lwa_client_secret: str = ""
-    amazon_lwa_redirect_uri: str = "http://localhost:8000/api/auth/amazon/callback"
+    amazon_client_id: str = ""
+    amazon_client_secret: str = ""
+    amazon_redirect_uri: str = "http://localhost:8000/api/auth/amazon/callback"
     amazon_lwa_auth_url: str = "https://www.amazon.com/ap/oa"
     amazon_lwa_token_url: str = "https://api.amazon.com/auth/o2/token"
     amazon_lwa_scopes: str = "profile"
+    amazon_default_marketplace_id: str = "A2VIGQ35RCS4UG"
     amazon_sp_api_region: str = "eu-west-1"
     amazon_sp_api_endpoint: str = "https://sellingpartnerapi-eu.amazon.com"
     amazon_sp_api_application_id: str = ""

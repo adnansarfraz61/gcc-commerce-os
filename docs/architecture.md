@@ -24,7 +24,7 @@ Amazon is implemented first because it is the most credential-heavy flow. The sa
 - Shopify OAuth and store authorization
 - TikTok Shop OAuth and shop authorization
 
-Each marketplace should persist seller authorization records in the shared `seller_authorizations` table and keep provider-specific payloads in `marketplace_metadata`.
+Marketplace modules should persist shared authorization metadata in `seller_authorizations`. Provider-specific storage can live beside it, as Amazon does with `amazon_seller_authorizations` for seller ID, marketplace ID, encrypted refresh token, and creation timestamp.
 
 ## Security Notes
 

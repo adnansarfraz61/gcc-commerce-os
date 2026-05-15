@@ -23,6 +23,11 @@ class Tenant(UUIDPrimaryKeyMixin, TimestampMixin, Base):
         back_populates="tenant",
         cascade="all, delete-orphan",
     )
+    amazon_seller_authorizations = relationship(
+        "AmazonSellerAuthorization",
+        back_populates="tenant",
+        cascade="all, delete-orphan",
+    )
 
 
 class User(UUIDPrimaryKeyMixin, TimestampMixin, Base):
